@@ -10,7 +10,7 @@ from shared.readfile import *
 
 
 def main(): 
-    df = getFile("winequality-red.csv");
+    df = getFile(WHITE_WINE_FILENAME);
     df = normalize(df);
     print(df)
 
