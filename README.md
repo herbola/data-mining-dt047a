@@ -27,8 +27,11 @@ Evaluation Methods
 
 - leave-one-out cross validation (Prediction accuracy for decision tree algorithm)
 - Confusion matrix
+
   - Whether the predicted value of white/red wine actually is white/red wine
   - Matthews correlation matrix to evaluate the confusion matrix, determine the accuracy.
+
+  ![Figure_1](https://user-images.githubusercontent.com/43444902/75152040-68edef00-5708-11ea-894d-7622b277d73e.png)
 
 ### Multiple Linear Regression
 
