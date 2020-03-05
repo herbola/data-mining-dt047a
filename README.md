@@ -25,7 +25,6 @@ Output
 
 Evaluation Methods
 
-- leave-one-out cross validation (Prediction accuracy for decision tree algorithm)
 - Confusion matrix
 
   - Whether the predicted value of white/red wine actually is white/red wine

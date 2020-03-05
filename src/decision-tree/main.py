@@ -9,17 +9,16 @@ sys.path.insert(0, abspath(join(dirname(__file__), '..')))
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-
+import math
 # scipy
 from scipy.stats import sem
 
 # sklearn
-
-from sklearn.model_selection import train_test_split, cross_val_score, LeaveOneOut
+from sklearn.model_selection import train_test_split, cross_val_score, LeaveOneOut, cross_validate
 from sklearn.tree import DecisionTreeClassifier 
 from sklearn.metrics import classification_report, confusion_matrix # accuracy
 from sklearn import metrics
-
+from sklearn.preprocessing import StandardScaler
 # shared imports
 from shared.config import *
 from shared.utility import *
@@ -29,37 +28,22 @@ def main():
     df = getDataSet()
     decision_tree(df)
 
-def loo_cv(X, y): # not sure how to use this yes
-    loo = LeaveOneOut()
- 
-    print(loo.get_n_splits(X))
-    print(loo)
-
-    for train_index, test_index in loo.split(X):
-        #print("TRAIN:", train_index, "TEST:", test_index)
-        X_train, X_test = X[train_index], X[test_index]
-        y_train, y_test = y[train_index], y[test_index]
-       # print(X_train, X_test, y_train, y_test)
-
 def decision_tree(df):
+
     columns = len(df.columns)
     X = df.iloc[:, [0, columns - 2]].values #parameters
     y = df.iloc[:, columns - 1].values # answers
+    
+    
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state = 42)
 
-    loo_cv(X, y)
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state = 0)
-
-
-    # preprocess
-    from sklearn.preprocessing import StandardScaler
     sc = StandardScaler()
     X_train = sc.fit_transform(X_train)
     X_test = sc.transform(X_test)
 
     # fit method is used to train data
-    classifier = DecisionTreeClassifier(criterion= 'entropy', random_state = 0)
+    classifier = DecisionTreeClassifier(criterion= 'entropy', random_state = 0, )
     classifier.fit(X_train, y_train)
-
 
     # predict
     y_pred = classifier.predict(X_test)
@@ -67,17 +51,29 @@ def decision_tree(df):
     print(confusion_matrix(y_test, y_pred))
     print(classification_report(y_test, y_pred))
 
-    plot(X_train, y_train, classifier, X_test, y_test)
-    
+  #  plot(X_train, y_train, classifier, X_test, y_test)
+def bootstrap(minDf, maxDf):
+    while True:
+        if len(minDf) < len(maxDf):
+            diff = len(maxDf) - len(minDf)
+            if diff > len(minDf):
+                diff = len(minDf)
+            minDf = minDf.merge(minDf.head(n = diff))
+        else:
+            return minDf;
 
 def getDataSet(): 
     df1 = getFile(WHITE_WINE_FILENAME)
     df1 = normalize(df1)
     df2 = getFile(RED_WINE_FILENAME)
     df2 = normalize(df2)
-    df = concat(df1, 0, df2, 1)
-    return df
+    if len(df1) > len(df2):
+        df2 = bootstrap(df2, df1)
+    else:
+        df1 = bootstrap(df1, df2)
 
+    df = concat(df1, "WHITE", df2, "RED")
+    return df
 
 def plot(X_train, y_train, classifier, X_test, y_test):
     # Visualising the Training set results
