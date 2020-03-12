@@ -19,7 +19,6 @@ from sklearn.preprocessing import StandardScaler
 # shared imports
 from shared.config import *
 from shared.utility import *
-from shared.plot import plot
 
 # config
 test_size = 0.25
