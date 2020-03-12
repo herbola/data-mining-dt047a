@@ -76,8 +76,8 @@ def getDataSet():
     df = getFile(WHITE_WINE_FILENAME)
     df.drop_duplicates()
 
-    df = freqBinning(df, 'quality')
-   # df = widthBinning(df, 'quality')
+    df = freqBinning(df, QUALITY)
+   # df = widthBinning(df, QUALITY)
 
     df = normalize(df)
     df.drop(len(df.columns) - 2, 1)
