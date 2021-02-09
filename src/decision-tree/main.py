@@ -22,7 +22,7 @@ from shared.utility import *
 
 # config
 TEST_SIZE = 0.25
-random_state = 42
+RANDOM_STATE = 42
 def main(): 
     df = getDataSet()
     decision_tree(df)
@@ -31,7 +31,7 @@ def main():
 def decision_tree(df):
     X, y = getXandY(df)
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=TEST_SIZE, random_state = 0)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=TEST_SIZE, RANDOM_STATE = 0)
 
 
     sc = StandardScaler()
@@ -39,7 +39,7 @@ def decision_tree(df):
     X_test = sc.transform(X_test)
 
     # fit method is used to train data
-    classifier = DecisionTreeClassifier(criterion= 'entropy', random_state = random_state)
+    classifier = DecisionTreeClassifier(criterion= 'entropy', random_state = RANDOM_STATE)
     classifier.fit(X_train, y_train)
 
 
@@ -49,7 +49,7 @@ def decision_tree(df):
     cm = confusion_matrix(y_test, y_pred)
     print(cm)
     print('Testsize: ' + str(TEST_SIZE * 100) + '%')
-    print('Random state: ' + str(random_state) + '%')
+    print('Random state: ' + str(RANDOM_STATE) + '%')
     print('Success rate: ' + str(successRate(cm)))
     print('Kappa success rate: ' + str(kappaSuccesRate(cm)))
     
