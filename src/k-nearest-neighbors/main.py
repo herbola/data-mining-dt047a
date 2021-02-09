@@ -19,7 +19,7 @@ from shared.utility import *
 from shared.plot import *
 
 # config
-test_size = 0.25
+TEST_SIZE = 0.25
 
 def main(): 
     df = getDataSet()
@@ -27,7 +27,7 @@ def main():
     X, y = getXandY(df)
 
     # Splitting the dataset into the Training set and Test set
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = test_size)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, TEST_SIZE = TEST_SIZE)
 
 
     # Feature Scaling
@@ -46,7 +46,7 @@ def main():
     # Making the Confusion Matrix
     cm = confusion_matrix(y_test, y_pred)
     print(cm)
-    print('Testsize: ' + str(test_size * 100) + '%')
+    print('Testsize: ' + str(TEST_SIZE * 100) + '%')
     print('Success rate: ' + str(successRate(cm)))
     print('Kappa success rate: ' + str(kappaSuccesRate(cm)))
     roc(classifier, X_test, y_test)

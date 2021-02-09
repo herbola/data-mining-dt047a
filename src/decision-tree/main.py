@@ -21,7 +21,7 @@ from shared.config import *
 from shared.utility import *
 
 # config
-test_size = 0.25
+TEST_SIZE = 0.25
 random_state = 42
 def main(): 
     df = getDataSet()
@@ -31,7 +31,7 @@ def main():
 def decision_tree(df):
     X, y = getXandY(df)
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state = 0)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=TEST_SIZE, random_state = 0)
 
 
     sc = StandardScaler()
@@ -48,7 +48,7 @@ def decision_tree(df):
 
     cm = confusion_matrix(y_test, y_pred)
     print(cm)
-    print('Testsize: ' + str(test_size * 100) + '%')
+    print('Testsize: ' + str(TEST_SIZE * 100) + '%')
     print('Random state: ' + str(random_state) + '%')
     print('Success rate: ' + str(successRate(cm)))
     print('Kappa success rate: ' + str(kappaSuccesRate(cm)))
